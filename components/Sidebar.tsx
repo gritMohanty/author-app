@@ -1,20 +1,28 @@
 "use client";
 import React, { useState } from "react";
+import {
+  TfiBriefcase,
+  TfiComments,
+  TfiLayoutMediaOverlay,
+} from "react-icons/tfi";
 
 const INITIAL_TABS = [
   {
     id: 0,
     name: "My Work",
+    icon: <TfiBriefcase />,
     isActive: true,
   },
   {
     id: 1,
     name: "Authors Feed",
+    icon: <TfiComments />,
     isActive: false,
   },
   {
     id: 2,
     name: "Review Requests",
+    icon: <TfiLayoutMediaOverlay />,
     isActive: false,
   },
 ];
@@ -22,7 +30,7 @@ const INITIAL_TABS = [
 function Sidebar() {
   const [tabs, setTabs] = useState(INITIAL_TABS);
   const handleTabChange = (id: number) => {
-    const newTabs = [...tabs]
+    const newTabs = [...tabs];
     newTabs.map((tab) => {
       if (tab.id === id) tab.isActive = true;
       else tab.isActive = false;
@@ -36,7 +44,10 @@ function Sidebar() {
           className={`cursor-pointer ${tab.isActive && "bg-yellow"} p-2`}
           onClick={() => handleTabChange(tab.id)}
         >
-          {tab?.name}
+          <span className="flex flex-row items-center justify-start gap-8">
+            {tab.icon}
+            {tab?.name}
+          </span>
         </li>
       ))}
     </ul>

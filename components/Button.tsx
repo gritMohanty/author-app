@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 
 function Button({
@@ -5,6 +6,7 @@ function Button({
   variant = "primary",
   size = "medium",
   label = "click",
+  onClick = (item: any) => {}
 }) {
   let classes = "";
 
@@ -26,6 +28,7 @@ function Button({
       className={`${
         size === "medium" && "w-auto h-8"
       } flex items-center justify-center  p-4 cursor-pointer pl-6 pr-6 border-2 ${classes} `}
+      onClick={onClick}
     >
       {label}
     </span>

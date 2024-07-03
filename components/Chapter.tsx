@@ -1,6 +1,7 @@
 import React from "react";
 import Tag from "./Tag";
 import Button from "./Button";
+import SceneSorter from "./SceneSorter";
 
 type Scene = {
   id: number;
@@ -22,9 +23,7 @@ const Chapter = ({ name, scenes }: { name: string; scenes: Scene[] }) => {
       </div>
 
       <div className="border-black outline-dashed mt-4 p-4">
-        {scenes.map((scene) => (
-          <div className="border-black border-2 p-4 mb-2">{scene.name}</div>
-        ))}
+        <SceneSorter scenes={scenes} />
       </div>
     </div>
   );

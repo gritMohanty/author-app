@@ -1,7 +1,13 @@
-import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
-import Link from "next/link";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-poppins",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -19,14 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${poppins.variable}`}>
       <body className="flex-1 w-full h-full flex-row">
-        <div className="layout flex h-screen">
-          <nav className="sidebar w-2/12 flex-shrink-0 p-4 border-r-2 border-gray">
-            <Sidebar/>
-          </nav>
-          <main className="content flex-grow px-4 py-4">{children}</main>
-        </div>
+        {children}
       </body>
     </html>
   );
