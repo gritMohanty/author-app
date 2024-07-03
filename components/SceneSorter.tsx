@@ -25,7 +25,7 @@ const DUMMY = [
 const Indicator = ({ beforeId }) => {
   return (
     <div
-      data-before={beforeId || -1}
+      data-before={beforeId}
       data-id="indicator"
       className="w-full h-2 bg-yellow opacity-0"
     ></div>
@@ -33,6 +33,7 @@ const Indicator = ({ beforeId }) => {
 };
 
 const SceneSorter = ({ scenes }: { scenes: Scene[] }) => {
+  const [active, setActive] = useState(false);
   const [cards, setCards] = useState(DUMMY);
   const handleDragStart = (e, id) => {
     e.dataTransfer.setData("cardId", String(id));
@@ -40,6 +41,7 @@ const SceneSorter = ({ scenes }: { scenes: Scene[] }) => {
 
   const handleDragOver = (e) => {
     e.preventDefault();
+    setActive(true);
     highlightIndicator(e);
   };
 
@@ -95,42 +97,40 @@ const SceneSorter = ({ scenes }: { scenes: Scene[] }) => {
     const { element } = el;
     const before = element.dataset.before ?? -1;
 
-    if (before !== cardId) {
+    if (before != cardId) {
       let newCards = [...cards];
-      let cardToTransfer = newCards.find((c) => c.id === cardId);
-      let restCards = newCards.filter((c) => c.id !== cardId);
-      let insertAtIndex = newCards.findIndex((c) => c.id === before);
-      if (!insertAtIndex) return;
-      let modifiedCards = restCards.splice(insertAtIndex, 0, cardToTransfer!);
-      console.log(
-        modifiedCards,
-        cards,
-        "cards here",
-        cardToTransfer,
-        restCards,
-        insertAtIndex
-      );
-      setCards([...modifiedCards]);
+      let cardToTransfer1 = newCards.find((c) => c.id == cardId);
+      let cardToTransfer2 = newCards.find((c) => c.id == before);
+      let restCards = newCards.filter((c) => c.id != cardId);
+      restCards = restCards.filter((c) => c.id != before);
+      let insertAtIndex1 = newCards.findIndex((c) => c.id == before);
+      let insertAtIndex2 = newCards.findIndex((c) => c.id == cardId);
+      restCards.splice(insertAtIndex1, 0, cardToTransfer1!);
+      restCards.splice(insertAtIndex2, 0, cardToTransfer2!);
+      setCards([...restCards]);
     }
+
+    setActive(false);
   };
 
   return (
     <div onDragOver={handleDragOver} onDrop={handleDrop}>
       {cards.map((scene) => (
-        <>
+        <div key={scene?.id}>
           <Indicator beforeId={scene?.id} />
           <div
             key={scene.id}
-            className="flex flex-row items-center justify-start cursor-grab"
+            className={`flex flex-row items-center justify-start cursor-grab gap-2 ${
+              active ? "opacity-20" : "opacity-100"
+            }`}
             draggable
             onDragStart={(e) => handleDragStart(e, scene.id)}
           >
             <TfiViewList />
             <div className="border-black border-2 p-4 w-full">{scene.name}</div>
           </div>
-        </>
+        </div>
       ))}
-      <Indicator beforeId={-1} />
     </div>
   );
 };

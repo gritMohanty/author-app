@@ -41,6 +41,7 @@ function Sidebar() {
     <ul className="flex gap-4 flex-col">
       {tabs?.map((tab) => (
         <li
+          key={tab?.id}
           className={`cursor-pointer ${tab.isActive && "bg-yellow"} p-2`}
           onClick={() => handleTabChange(tab.id)}
         >
