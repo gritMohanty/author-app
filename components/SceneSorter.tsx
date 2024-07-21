@@ -1,40 +1,29 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { TfiViewList } from "react-icons/tfi";
-
-type Scene = {
-  id: number;
-  name: string;
-};
-
-const DUMMY = [
-  {
-    id: 0,
-    name: "Unearthing the Past: Anya and her friends, Kai and Maya, explore the tide pools during a storm, uncovering a strange, glowing stone.",
-  },
-  {
-    id: 1,
-    name: "Village Legends: Anya's grandmother recounts stories of the sunken city, its treasures, and the dangers that lurk beneath the waves.",
-  },
-  {
-    id: 2,
-    name: "A Cryptic Inscription: The children examine the stone, discovering symbols and markings that seem to hold a deeper meaning.",
-  },
-];
+import { TfiArrowRight, TfiViewList } from "react-icons/tfi";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import Link from "next/link";
 
 const Indicator = ({ beforeId }) => {
   return (
     <div
       data-before={beforeId}
       data-id="indicator"
-      className="w-full h-2 bg-yellow opacity-0"
+      className="w-full h-2 bg-black opacity-0 rounded-md"
     ></div>
   );
 };
 
 const SceneSorter = ({ scenes }: { scenes: Scene[] }) => {
+  console.log(scenes, "scenes here");
   const [active, setActive] = useState(false);
-  const [cards, setCards] = useState(DUMMY);
+  const [cards, setCards] = useState([]);
   const handleDragStart = (e, id) => {
     e.dataTransfer.setData("cardId", String(id));
   };
@@ -115,19 +104,27 @@ const SceneSorter = ({ scenes }: { scenes: Scene[] }) => {
 
   return (
     <div onDragOver={handleDragOver} onDrop={handleDrop}>
-      {cards.map((scene) => (
+      {scenes.map((scene) => (
         <div key={scene?.id}>
           <Indicator beforeId={scene?.id} />
           <div
             key={scene.id}
-            className={`flex flex-row items-center justify-start cursor-grab gap-2 ${
+            className={`flex flex-col items-center justify-center cursor-grab gap-2 w-full ${
               active ? "opacity-20" : "opacity-100"
             }`}
             draggable
             onDragStart={(e) => handleDragStart(e, scene.id)}
           >
-            <TfiViewList />
-            <div className="border-black border-2 p-4 w-full">{scene.name}</div>
+            <Card className="w-full">
+              <CardHeader>
+                <CardDescription className="flex flex-row justify-between">
+                  {scene.summary}{" "}
+                  <Link href={`/storylines/0/0/0`}>
+                    <TfiArrowRight className="cursor-pointer" />
+                  </Link>
+                </CardDescription>
+              </CardHeader>
+            </Card>
           </div>
         </div>
       ))}
