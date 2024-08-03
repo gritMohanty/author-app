@@ -12,9 +12,9 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useCallback, useState } from "react";
-import "../tailwind.config";
-
+import "../../tailwind.config";
 import CharacterNode from "./CharacterNode";
+
 const nodeTypes = { customNode: CharacterNode };
 
 const initialNodes = [

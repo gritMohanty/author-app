@@ -1,27 +1,29 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { TfiArrowRight, TfiViewList } from "react-icons/tfi";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
+
 import Link from "next/link";
+import { Card, CardDescription, CardHeader } from "../ui/card";
 
 const Indicator = ({ beforeId }) => {
   return (
     <div
       data-before={beforeId}
       data-id="indicator"
-      className="w-full h-2 bg-black opacity-0 rounded-md"
+      className="w-full h-2 bg-slate-900 opacity-0 rounded-md"
     ></div>
   );
 };
 
-const SceneSorter = ({ scenes }: { scenes: Scene[] }) => {
-  console.log(scenes, "scenes here");
+const PlotSorter = ({
+  plots,
+  storyId,
+  chapterId,
+}: {
+  plots: any;
+  storyId: number;
+  chapterId: number;
+}) => {
   const [active, setActive] = useState(false);
   const [cards, setCards] = useState([]);
   const handleDragStart = (e, id) => {
@@ -104,22 +106,22 @@ const SceneSorter = ({ scenes }: { scenes: Scene[] }) => {
 
   return (
     <div onDragOver={handleDragOver} onDrop={handleDrop}>
-      {scenes.map((scene) => (
-        <div key={scene?.id}>
-          <Indicator beforeId={scene?.id} />
+      {plots.map((plot) => (
+        <div key={plot?.id}>
+          <Indicator beforeId={plot?.id} />
           <div
-            key={scene.id}
+            key={plot.id}
             className={`flex flex-col items-center justify-center cursor-grab gap-2 w-full ${
               active ? "opacity-20" : "opacity-100"
             }`}
             draggable
-            onDragStart={(e) => handleDragStart(e, scene.id)}
+            onDragStart={(e) => handleDragStart(e, plot.id)}
           >
-            <Card className="w-full">
+            <Card className="w-full border-dashed">
               <CardHeader>
                 <CardDescription className="flex flex-row justify-between">
-                  {scene.summary}{" "}
-                  <Link href={`/storylines/0/0/0`}>
+                  {plot.summary}{" "}
+                  <Link href={`/storylines/${storyId}/chapters/${chapterId}/${plot?.id}`}>
                     <TfiArrowRight className="cursor-pointer" />
                   </Link>
                 </CardDescription>
@@ -132,4 +134,4 @@ const SceneSorter = ({ scenes }: { scenes: Scene[] }) => {
   );
 };
 
-export default SceneSorter;
+export default PlotSorter;

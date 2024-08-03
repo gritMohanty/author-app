@@ -19,7 +19,7 @@ const CreateChapter = ({ params }: { params: { storyId: String } }) => {
   const [description, setDescription] = useState("");
 
   const addChapter = async () => {
-    const res = await fetch(`/storylines/${params.storyId}/create/api`, {
+    const res = await fetch(`/storylines/${params.storyId}/chapters/create/api`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({

@@ -46,9 +46,7 @@ const formats = [
   "video",
 ];
 
-const TextEditor = () => {
-  const [value, setValue] = useState("");
-
+const TextEditor = ({ value, setValue }) => {
   return (
     <div className="my-8 w-full">
       <ReactQuill

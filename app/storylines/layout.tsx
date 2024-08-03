@@ -1,7 +1,7 @@
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/misc/Sidebar";
 import React from "react";
 
-const StoryLayout = ({children}: {children: React.ReactNode}) => {
+const StoryLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="layout flex h-screen">
       <nav className="sidebar w-auto flex-shrink-0 p-4 border-r-2 border-gray">

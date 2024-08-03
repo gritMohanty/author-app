@@ -1,5 +1,5 @@
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/misc/Sidebar";
 import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
@@ -26,9 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${poppins.variable}`}>
-      <body className="flex-1 w-full h-full flex-row">
-        {children}
-      </body>
+      <body className="flex-1 w-full h-full flex-row">{children}</body>
     </html>
   );
 }

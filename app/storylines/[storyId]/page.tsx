@@ -1,12 +1,15 @@
 "use client";
-import MapMode from "@/components/MapMode";
-import StoryMode from "@/components/StoryMode";
+
+import MapMode from "@/components/map/MapMode";
+
+import StoryMode from "@/components/story/StoryMode";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useEffect, useState } from "react";
 
 const Story = ({ params }: { params: { storyId: number } }) => {
   const [storyData, setStoryData] = useState([]);
   const [chapterData, setChapterData] = useState([]);
+
   const fetchStoryData = async () => {
     try {
       const response = await fetch(`/storylines/${params.storyId}/api`);
